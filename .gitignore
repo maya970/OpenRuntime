@@ -1,0 +1,24 @@
+# Local downloads / cache
+cache/
+downloads/
+tools/_tmp/
+*.log
+*.tmp
+
+# Editor / OS
+.vs/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Build artifacts (keep packages\ — offline redistributables)
+dist/
+*.exe~
+
+# Offline redistributables ship in the Release ZIP, not in git history
+packages/*.exe
+packages/*.msu
+packages/*.zip
+packages/*.jpg
