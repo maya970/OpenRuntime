@@ -97,14 +97,7 @@ OpenRuntime/
 - 退出码 `3010` = 成功但建议重启；`1638` / `2359302` = 已安装更新版本。  
 - 请从本仓库 Release 或你信任的镜像获取完整 ZIP。
 
-## 上传到 GitHub
 
-脚本可用 `git push`；**离线包体积大，请打 Release ZIP 上传附件**，避免把几百 MB 二进制推进 git 历史。
-
-```bash
-# 打完整离线包（含 packages）
-Compress-Archive -Path .\* -DestinationPath OpenRuntime-offline.zip
-```
 
 ## 贡献
 
