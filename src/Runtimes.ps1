@@ -300,8 +300,66 @@ function Get-OpenRuntimeCatalog {
             Args        = ''
             Detect      = @{ Kind = 'VxKex' }
             Enabled     = $true
-            Note        = '打不开的程序：点「修复 Win7 打不开的程序」'
+            Note        = '打不开时只点「一键修复打不开的程序」'
             Special     = 'VxKex'
+        }
+
+        # 图形兼容层：不出现在列表里，避免小白多点。由「一键修复」静默装齐并拷到程序旁。
+        $list += @{
+            Id          = 'vulkan_rt'
+            Name        = 'Vulkan Runtime 1.2.198.1（Win7）'
+            Arch        = 'any'
+            Category    = '图形'
+            Url         = 'https://web.archive.org/web/20211231143401id_/https://sdk.lunarg.com/sdk/download/1.2.198.1/windows/VulkanRT-1.2.198.1-Installer.exe'
+            FileName    = 'VulkanRT-1.2.198.1-Installer.exe'
+            Args        = '/S'
+            Detect      = @{ Kind = 'VulkanRuntime' }
+            Enabled     = $false
+            Note        = '由一键修复自动安装'
+            Special     = 'VulkanRuntime'
+        }
+        $list += @{
+            Id          = 'dxvk'
+            Name        = 'DXVK 1.10.3（D3D9/11→Vulkan）'
+            Arch        = 'any'
+            Category    = '图形'
+            Url         = ''
+            FileName    = 'dxvk-1.10.3.zip'
+            Args        = ''
+            Detect      = @{ Kind = 'Dxvk' }
+            Enabled     = $false
+            Note        = '由一键修复自动安装'
+            Special     = 'Dxvk'
+        }
+        $list += @{
+            Id          = 'vkd3d'
+            Name        = 'vkd3d-proton 2.6（D3D12→Vulkan）'
+            Arch        = 'any'
+            Category    = '图形'
+            Url         = ''
+            FileName    = 'vkd3d-proton-2.6.zip'
+            Args        = ''
+            Detect      = @{ Kind = 'Vkd3d' }
+            Enabled     = $false
+            Note        = '由一键修复自动安装'
+            Special     = 'Vkd3d'
+        }
+    }
+
+    # Win10/11：老 Win7 游戏闪退（过山车大亨、遥远的世界等）——不进列表，由一键修复静默处理
+    if ($os.Major -ge 10) {
+        $list += @{
+            Id          = 'dgvoodoo2'
+            Name        = 'dgVoodoo2（老游戏图形兼容）'
+            Arch        = 'any'
+            Category    = '图形'
+            Url         = 'https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.87.5/dgVoodoo2_87_5.zip'
+            FileName    = 'dgVoodoo2_87_5.zip'
+            Args        = ''
+            Detect      = @{ Kind = 'DgVoodoo' }
+            Enabled     = $false
+            Note        = '由一键修复自动安装'
+            Special     = 'DgVoodoo'
         }
     }
 

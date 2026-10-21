@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableExtensions
-title OpenRuntime - Fix Win7 App
+title OpenRuntime - Fix App
 cd /d "%~dp0"
 
 set "PSEXE=%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe"
@@ -21,6 +21,7 @@ exit /b 0
 exit /b 0
 
 :Usage
-echo Drag the program (exe) that will not start on Win7 onto this bat.
+echo Drag one program (exe) onto this bat. It will fix it automatically.
+echo Then double-click that program. Nothing else to click.
 pause
 exit /b 1

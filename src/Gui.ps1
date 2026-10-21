@@ -287,31 +287,31 @@ function Show-OpenRuntimeGui {
     $form.Controls.Add($btnRefresh)
 
     $btnFixApp = New-Object System.Windows.Forms.Button
-    $btnFixApp.Text = '修复 Win7 打不开的程序…'
+    $btnFixApp.Text = '一键修复打不开的程序…'
     $btnFixApp.Location = New-Object Drawing.Point(530, 598)
     $btnFixApp.Size = New-Object Drawing.Size(186, 36)
     $btnFixApp.Anchor = 'Bottom,Left'
-    $btnFixApp.Visible = (Test-OrIsWin7)
+    $btnFixApp.Visible = ((Test-OrIsWin7) -or (Test-OrIsWin10Plus))
     $btnFixApp.Add_Click({
         if (-not (Test-IsAdministrator)) {
             [void][System.Windows.Forms.MessageBox]::Show("需要管理员权限。`n请右键 Install.bat → 以管理员身份运行。", '需要管理员权限', 'OK', 'Warning')
             return
         }
         $dlg = New-Object System.Windows.Forms.OpenFileDialog
-        $dlg.Title = '选择在 Win7 上打不开的程序（exe）'
+        $dlg.Title = '选一个打不开 / 一点就闪退的程序，选完自动修好'
         $dlg.Filter = '程序 (*.exe)|*.exe'
         if ($dlg.ShowDialog() -ne 'OK') { return }
         Set-UiBusy $true
         $prog = { param($msg) Add-UiLog $msg }
         $r = $null
-        try { $r = Repair-OrWin7App -Path $dlg.FileName -Progress $prog }
-        catch { Add-UiLog ('异常：' + $_.Exception.Message) }
+        try { $r = Repair-OrCompatApp -Path $dlg.FileName -Progress $prog }
+        catch { Add-UiLog ('出错了：' + $_.Exception.Message) }
         Set-UiBusy $false
         if ($r) {
             Add-UiLog $r.Message
             $icon = 'Information'
-            if (-not $r.Ok -or $r.Uncovered.Count -gt 0) { $icon = 'Warning' }
-            [void][System.Windows.Forms.MessageBox]::Show($r.Message + "`n`n现在可以直接双击运行该程序。", '修复结果', 'OK', $icon)
+            if (-not $r.Ok) { $icon = 'Warning' }
+            [void][System.Windows.Forms.MessageBox]::Show($r.Message, '修好了', 'OK', $icon)
         }
     })
     $form.Controls.Add($btnFixApp)
@@ -328,9 +328,10 @@ function Show-OpenRuntimeGui {
             "2. 点绿色「一键全部安装」`n" +
             "3. 看着下方进度条，不要强制关闭`n" +
             "4. 装完后如提示重启，请重启电脑`n`n" +
-            "额外组件：`n" +
-            "• Locale Emulator：右键程序 → Locale Emulator → 用日语运行`n" +
-            "• Win7 打不开新软件（提示「无法定位程序输入点」等）：点「修复 Win7 打不开的程序」选择该程序，或把 exe 拖到 Fix-Win7App.bat 上`n`n" +
+            "额外：`n" +
+            "• 日文软件乱码：右键程序 → Locale Emulator → 用日语运行`n" +
+            "• 打不开 / 一点就闪退的程序：只点「一键修复打不开的程序」，选出那个 exe，等它做完，再双击运行。不用再点别的`n" +
+            "  （Win7 跑新软件、Win10 跑过山车大亨 / 遥远的世界等老游戏，都是这一个按钮）`n`n" +
             "https://github.com/maya970",
             '使用说明',
             'OK',
@@ -398,7 +399,7 @@ function Show-OpenRuntimeGui {
         $tip = "安装流程结束。`n成功 $ok，跳过 $skip，失败 $fail。`n`n"
         $tip += "【以后怎么用】`n"
         $tip += "日文游戏乱码：右键程序 → Locale Emulator → 用日语运行`n"
-        $tip += "Win7 打不开新软件：点「修复 Win7 打不开的程序」选择它`n"
+        $tip += "打不开或闪退：点「一键修复打不开的程序」选出它，等做完再双击运行`n"
         $tip += "`n若提示需要重启，请重启后再试软件。"
         $icon = 'Information'
         if ($fail -gt 0) { $icon = 'Warning' }

@@ -1,9 +1,13 @@
-﻿directx_Jun2010_redist.exe	100275120
+banner.jpg	217128
+D3DRM.zip	177032
+dgVoodoo2_87_5.zip	9268078
+directx_Jun2010_redist.exe	100275120
+dxvk-1.10.3.zip	8508413
 KexSetup_Release_1_2_3_2463.exe	5023495
 Locale.Emulator.2.5.0.1.zip	154135
-MANIFEST.txt	666
+MANIFEST.txt	856
 ndp48-x86-x64-AllOS-ENU.exe	121346568
-README.txt	575
+README.txt	919
 vc_redist_x64.exe	18731856
 vc_redist_x64_win7.exe	25333272
 vc_redist_x86.exe	6941536
@@ -18,6 +22,8 @@ vcredist_2012_x64.exe	7186992
 vcredist_2012_x86.exe	6554576
 vcredist_2013_x64.exe	7200744
 vcredist_2013_x86.exe	6510136
+vkd3d-proton-2.6.zip	2169246
+VulkanRT-1.2.198.1-Installer.exe	1753472
 Win7AndW2K8R2-KB3191566-x64.msu	68054745
 Win7-KB3191566-x86.msu	44807068
 Win8.1AndW2K12R2-KB3191564-x64.msu	19878906

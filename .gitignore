@@ -2,6 +2,7 @@
 cache/
 downloads/
 tools/_tmp/
+_tmp/
 *.log
 *.tmp
 

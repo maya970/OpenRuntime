@@ -109,6 +109,10 @@ function Resolve-OpenRuntimeOfflineFile {
             $patterns += 'Locale*.zip'
             $patterns += '*Emulator*.zip'
         }
+        if ($FileName -match 'VulkanRT') { $patterns += 'VulkanRT*.exe'; $patterns += '*Vulkan*Installer*.exe' }
+        if ($FileName -match '^dxvk-') { $patterns += 'dxvk-*.zip'; $patterns += 'dxvk*.zip' }
+        if ($FileName -match 'vkd3d') { $patterns += 'vkd3d*.zip'; $patterns += 'vkd3d-proton*.zip' }
+        if ($FileName -match 'dgVoodoo') { $patterns += 'dgVoodoo*.zip'; $patterns += 'dgVoodoo2*.zip' }
         if ($FileName -match 'banner|index002') { $patterns += 'banner.*'; $patterns += 'index002.*'; $patterns += '*.jpg'; $patterns += '*.png' }
         if ($FileName -match 'vcredist_2005') { $patterns += '*2005*.exe'; $patterns += 'vcredist_x86.EXE'; $patterns += 'vcredist_x64.EXE' }
         if ($FileName -match 'ndp48') { $patterns += 'ndp48*.exe'; $patterns += '*NET*4.8*.exe' }
@@ -347,6 +351,10 @@ function Test-RuntimeInstalled {
         'PowerShell51' { return Test-PowerShell51Installed }
         'VxKex' { return Test-VxKexInstalled }
         'LocaleEmulator' { return Test-LocaleEmulatorInstalled }
+        'VulkanRuntime' { return Test-OrVulkanRuntimeInstalled }
+        'Dxvk' { return Test-OrDxvkInstalled }
+        'Vkd3d' { return Test-OrVkd3dInstalled }
+        'DgVoodoo' { return Test-OrDgVoodooInstalled }
         default { return $false }
     }
 }
@@ -546,6 +554,18 @@ function Install-OpenRuntimeItem {
         }
         elseif ($Item.Special -eq 'LocaleEmulator') {
             $code = Install-LocaleEmulatorPackage -ZipPath $dest -Progress $Progress
+        }
+        elseif ($Item.Special -eq 'VulkanRuntime') {
+            $code = Install-OrVulkanRuntimePackage -SetupPath $dest -Progress $Progress
+        }
+        elseif ($Item.Special -eq 'Dxvk') {
+            $code = Install-OrDxvkPackage -ZipPath $dest -Progress $Progress
+        }
+        elseif ($Item.Special -eq 'Vkd3d') {
+            $code = Install-OrVkd3dPackage -ZipPath $dest -Progress $Progress
+        }
+        elseif ($Item.Special -eq 'DgVoodoo') {
+            $code = Install-OrDgVoodooPackage -ZipPath $dest -Progress $Progress
         }
         else {
             if ($Progress) { & $Progress ('安装 ' + $Item.Name + '...') }
